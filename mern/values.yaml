@@ -1,0 +1,32 @@
+frontend:
+  image:
+    repository: wasimakram8/mern-frontend
+    tag: "1.0"
+
+  env:
+    apiUrl: "http://mern-backend:5000"
+  service:
+    port: 80
+
+backend:
+  image:
+    repository: wasimakram8/mern-backend
+    tag: "1.0"
+
+  env:
+    mongoUrl: "mongodb://root:root123@mern-mongo:27017/mydb"
+  service:
+    port: 5000
+
+mongo:
+  image:
+    repository: mongo
+    tag: "6.0"
+
+  auth:
+    username: root
+    password: root123
+    database: mydb
+
+  service:
+    port: 27017
