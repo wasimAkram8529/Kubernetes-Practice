@@ -1,0 +1,7 @@
+PV is a storage resource in k8s that exist independent of pods.
+pods filesystem is temporary.
+if pods restart, terminate, reschedule data will lost.
+if a pv matches the requirement/claim then k8s bind them with pvc.
+pv: The actual storage space (disk).
+pvc: A request by pod for storage.
+
