@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mern-frontend
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1  
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      name: mern-frontend
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: wasimakram8/k8s-mern-frontend:1.0
+          ports:
+            - containerPort: 80
+          env:
+            - name: API_URL
+              value: "http://myapp.local/api"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 5

@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-dep
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: backend
+
+  template:
+    metadata:
+      name: backend
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: env-key-ref
+            - secretRef:
+                name: secret
+          volumeMounts:
+            - name: configuration-files
+              mountPath: /app/config
+            - name: secret-files
+              mountPath: /app/secret
+              readOnly: true
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+            
+          # env:
+          #   - name: DB_HOST
+          #     valueFrom:
+          #       configMapKeyRef:
+          #         name: env-key-ref
+          #         key: DB_HOST
+          #   - name: DB_PORT
+          #     valueFrom:
+          #       configMapKeyRef:
+          #         name: env-key-ref
+          #         key: DB_PORT
+          #   - name: NODE_ENV
+          #     valueFrom:
+          #       configMapKeyRef:
+          #         name: env-key-ref
+          #         key: NODE_ENV
+          #   - name: DB_ROOT_PASSWORD
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: secret
+          #         key: DB_ROOT_PASSWORD
+          #   - name: DB_PASSWORD
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: secret
+          #         key: DB_PASSWORD
+          #   - name: TOKEN
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: secret
+          #         key: TOKEN
+      volumes:
+        - name: configuration-files
+          configMap:
+            name: env-key-ref
+        - name: secret-files
+          secret:
+            secretName: secret

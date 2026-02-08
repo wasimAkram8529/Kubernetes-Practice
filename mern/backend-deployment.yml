@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mern-backend
+  namespace: mern-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mern-backend
+  template:
+    metadata:
+      labels:
+        app: mern-backend
+    spec:
+      containers:
+        - name: backend
+          image: wasimakram8/mern-backend:2.0
+          ports:
+            - containerPort: 5000
+          env:
+            - name: PORT
+              value: "5000"
+            - name: MONGO_URI
+              value: "mongodb://mongouser:mongopass@mongo-0.mongo.mern-demo.svc.cluster.local:27017/mydb?authSource=admin"
+          securityContext:
+            runAsUser: 1000
+            runAsNonRoot: true

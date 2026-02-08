@@ -1,8 +1,8 @@
-./backend/node_modules/*
-./backend/.env
-./frontend/node_modules/*
-./frontend/.env
-./k8s-practice-02-2026/configuration-data/secrets.yml
-./manifest/secret.yml
-./mern/mongo-secret.yml
+backend/node_modules/*
+backend/.env
+frontend/node_modules/*
+frontend/.env
+k8s-practice-02-2026/configuration-data/secrets.yml
+manifest/secret.yml
+mern/mongo-secret.yml
 .env
