@@ -19,7 +19,7 @@ services:
       - mongo
     environment:
       PORT: 5000
-      MONGO_URI: "mongodb://mongouser:mongopass@mongo:27017/mern_test?authSource=admin"
+      MONGO_URI: ${MONGO_URI}
     ports:
       - "5000:5000"
 
